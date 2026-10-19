@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 /**
  * BasePage containing reusable element interactions and explicit waits.
@@ -46,6 +47,14 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public List<WebElement> waitForVisibilityOfAll(List<WebElement> elements) {
+        return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+    }
+
+    public List<WebElement> waitForVisibilityOfAll(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+    }
+
     public WebElement waitForClickable(WebElement element) {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
@@ -80,6 +89,46 @@ public abstract class BasePage {
 
     public String getText(By locator) {
         return waitForVisibility(locator).getText().trim();
+    }
+
+    public List<String> getTexts(List<WebElement> elements) {
+        return waitForVisibilityOfAll(elements).stream()
+                .map(WebElement::getText)
+                .map(String::trim)
+                .toList();
+    }
+
+    public List<String> getTexts(By locator) {
+        return waitForVisibilityOfAll(locator).stream()
+                .map(WebElement::getText)
+                .map(String::trim)
+                .toList();
+    }
+
+    public int getCount(By locator) {
+        return driver.findElements(locator).size();
+    }
+
+    public int getCount(List<WebElement> elements) {
+        return elements.size();
+    }
+
+    public void clickElementByText(List<WebElement> elements, String text) {
+        WebElement target = waitForVisibilityOfAll(elements).stream()
+                .filter(el -> el.getText().trim().equalsIgnoreCase(text.trim()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Element with text '" + text + "' not found in list"));
+        scrollToElement(target);
+        click(target);
+    }
+
+    public void clickElementByText(By locator, String text) {
+        WebElement target = waitForVisibilityOfAll(locator).stream()
+                .filter(el -> el.getText().trim().equalsIgnoreCase(text.trim()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Element with text '" + text + "' not found with locator " + locator));
+        scrollToElement(target);
+        click(target);
     }
 
     public boolean isDisplayed(WebElement element) {

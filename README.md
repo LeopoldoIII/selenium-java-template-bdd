@@ -54,7 +54,12 @@ mvn test -Dtest=UiTestRunner -Dcucumber.features="src/test/resources/features/UI
 
 # Run API feature only:
 mvn test -Dtest=ApiTestRunner -Dcucumber.features="src/test/resources/features/API/installments_api.feature"
-```
+
+# Debug by tag 
+mvn test -Dmaven.surefire.debug -Dcucumber.filter.tags="@debug"
+
+``` 
+
 
 ### Run by Tag
 ```bash

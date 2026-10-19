@@ -1,5 +1,10 @@
 # Code Style & Quality Standards
 
+## 0. Mandatory Language Standard
+- **ALL Code in English**: All source code, class names, method names, variable names, constants, Javadocs, inline comments, log messages, and error messages MUST be written strictly in **English**.
+- **Gherkin Features in English**: All `.feature` files, Feature titles, Scenarios, and Given/When/Then steps MUST be written in **English**.
+- **User Prompt Independence**: Even when user instructions, requests, or questions are in Spanish (or any other language), **all generated or modified code and documentation in the repository must be strictly in English**. Explanations in the chat can be in the user's preferred language, but project files must remain 100% English.
+
 ## Java Conventions
 
 1. **Naming Conventions**:

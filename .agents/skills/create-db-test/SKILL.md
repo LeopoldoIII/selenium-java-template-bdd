@@ -10,12 +10,15 @@ description: >-
 Follow this step-by-step workflow to validate database state (SQL) during test execution.
 
 ## Step 1: Configure Database Connection
+
 Set database parameters in `src/main/resources/config.json` or pass via CLI:
+
 ```bash
 mvn test -Dtest=UiTestRunner -Ddatabase.url="jdbc:postgresql://localhost:5432/testdb" -Ddatabase.username="postgres" -Ddatabase.password="secret"
 ```
 
 ## Step 2: Use Predefined Database Steps
+
 Step definitions are located in `src/test/java/com/bdd/steps/database/DbSteps.java`:
 
 ```gherkin
@@ -30,7 +33,9 @@ Scenario: Verify newly registered user exists in database
 ```
 
 ## Step 3: Direct Usage via DbManager in Java
+
 If creating custom step definitions:
+
 ```java
 List<Map<String, Object>> rows = DbManager.executeQuery("SELECT * FROM installments WHERE id = 101");
 Assert.assertEquals(rows.get(0).get("status"), "PAID");

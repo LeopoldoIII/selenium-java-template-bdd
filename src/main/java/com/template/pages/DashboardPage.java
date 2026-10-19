@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
+
 /**
  * Page Object for the Installments Dashboard.
  */
@@ -38,6 +40,16 @@ public class DashboardPage extends BasePage {
 
     public boolean isDashboardLoaded() {
         return isDisplayed(installmentsTable);
+    }
+
+    public List<String> getAllPlanIds() {
+        By planIdsLocator = By.xpath("//table[@id='installmentsTable']//td[contains(@class, 'plan-id')]");
+        return getTexts(planIdsLocator);
+    }
+
+    public int getPlansCount() {
+        By planRowsLocator = By.xpath("//table[@id='installmentsTable']//tbody//tr");
+        return getCount(planRowsLocator);
     }
 
     public void createNewPlan(String planId, String customer, String totalAmount, String installments) {
