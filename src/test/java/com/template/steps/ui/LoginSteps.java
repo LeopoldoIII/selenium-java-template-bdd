@@ -45,7 +45,7 @@ public class LoginSteps {
 
     @Then("the user should be redirected to the dashboard")
     public void userShouldBeRedirectedToDashboard() {
-        Assert.assertTrue(getLoginPage().waitForUrlContains("/dashboard"),
+        Assert.assertTrue(getLoginPage().waitForUrlContains("/plans-view"),
                 "User should be on dashboard page");
     }
 

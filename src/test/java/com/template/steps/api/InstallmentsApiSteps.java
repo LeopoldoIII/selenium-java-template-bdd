@@ -103,4 +103,33 @@ public class InstallmentsApiSteps {
         List<String> planIds = response.jsonPath().getList("id");
         Assert.assertTrue(planIds.contains(expectedPlanId), "Plans list should contain: " + expectedPlanId);
     }
+
+    @When("the API user requests plan details for {string}")
+    public void apiUserRequestsPlanDetails(String planId) {
+        Response response = io.restassured.RestAssured.given()
+                .baseUri(com.template.config.ConfigManager.getBaseUrl())
+                .contentType(io.restassured.http.ContentType.JSON)
+                .when()
+                .get("/plans/" + planId)
+                .then()
+                .extract().response();
+
+        ScenarioContext.set(CONTEXT_RESPONSE, response);
+    }
+
+    @Then("the installment {int} in the API response should have status {string}")
+    public void installmentInApiResponseShouldHaveStatus(int installmentNumber, String expectedStatus) {
+        Response response = ScenarioContext.get(CONTEXT_RESPONSE);
+        Assert.assertNotNull(response, "No API response found in ScenarioContext");
+        String actualStatus = response.jsonPath().getString("installments.find { it.number == " + installmentNumber + " }.status");
+        Assert.assertEquals(actualStatus, expectedStatus, "Installment " + installmentNumber + " API status mismatch");
+    }
+
+    @Then("the API plan remaining balance should be {double}")
+    public void apiPlanRemainingBalanceShouldBe(Double expectedBalance) {
+        Response response = ScenarioContext.get(CONTEXT_RESPONSE);
+        Assert.assertNotNull(response, "No API response found in ScenarioContext");
+        Double actualBalance = response.jsonPath().getDouble("remainingBalance");
+        Assert.assertEquals(actualBalance, expectedBalance, 0.001, "API remaining balance mismatch");
+    }
 }

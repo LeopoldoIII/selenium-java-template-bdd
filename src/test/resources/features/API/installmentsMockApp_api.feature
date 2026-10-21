@@ -19,3 +19,11 @@ Feature: Installments Backend REST API
     Then the response status code should be 201
     When the API user deletes the plan "API-PLAN-999"
     Then the response status code should be 200
+
+  @smoke @plans @contract
+  Scenario: Validate installment plan PLAN-1002 API contract
+    When the API user requests plan details for "PLAN-1002"
+    Then the response status code should be 200
+    And the installment 1 in the API response should have status "PARTIAL"
+    And the API plan remaining balance should be 260.00
+

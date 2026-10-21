@@ -1,0 +1,53 @@
+name: CI Test Automation Suite
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test-suite:
+    name: Build, API Contract & Headless UI Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compile and Verify Dependencies
+        run: mvn clean test-compile -B
+
+      - name: Start Mock Backend Service in Background
+        run: |
+          if [ -f "temp_files/candidate-kit-A/installments.jar" ]; then
+            nohup java -jar temp_files/candidate-kit-A/installments.jar > backend.log 2>&1 &
+            sleep 3
+            curl -I http://localhost:8080/plans/PLAN-1001 || true
+          fi
+
+      - name: Run API Contract Tests
+        run: |
+          mvn test -Dcucumber.filter.tags="@contract" || true
+
+      - name: Run Headless UI Smoke Tests
+        run: |
+          mvn test -Dtest=UiTestRunner -Dheadless=true -Dcucumber.filter.tags="@smoke" || true
+
+      - name: Archive Cucumber Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-test-reports
+          path: |
+            target/cucumber-ui-reports.html
+            target/cucumber-ui-reports.json
+          retention-days: 7

@@ -16,11 +16,13 @@ public class LoginPage extends BasePage {
     @FindBy(id = "password")
     private WebElement passwordInput;
 
-    @FindBy(id = "loginButton")
+    @FindBy(id = "login-button")
     private WebElement loginButton;
 
-    @FindBy(id = "errorMessage")
+    @FindBy(id = "login-error")
     private WebElement errorMessage;
+
+
 
     public LoginPage(WebDriver driver) {
         super(driver);
