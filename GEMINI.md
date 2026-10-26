@@ -14,4 +14,4 @@ Automates Web UI via **Cucumber + Selenium WebDriver 4** and REST APIs via **Cuc
 - **UI Automation**: Selenium Java 4.22.0 + WebDriverManager 5.8.0
 - **API Automation**: REST Assured 5.4.0 + Jackson
 - **Configuration**: `src/main/resources/config.properties` + System properties overrides
-- **Language Policy**: All code, comments, Javadocs, Gherkin scenarios, and commit messages MUST be in English regardless of the user's conversation language.
+- **Language Policy**: **STRICTLY 100% ENGLISH** — all repository files, source code, markdown documentation (`.md`), comments, Javadocs, Gherkin scenarios, SQL queries, configs, and commit messages MUST be in English regardless of the user's prompt or conversation language.

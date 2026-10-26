@@ -5,7 +5,7 @@ This template is optimized for **speed, clarity, and live coding Cucumber BDD in
 ## Project Summary
 - **Type**: BDD Automation Testing Framework (Web UI & REST API)
 - **Language**: Java 21
-- **Code Language Policy**: **STRICTLY ENGLISH** — all code, comments, Javadocs, Gherkin features, and steps must be in English regardless of the user's prompt language.
+- **Language Policy**: **STRICTLY 100% ENGLISH** — all repository content (including source code, documentation `.md` files, comments, Javadocs, Gherkin features, step definitions, SQL queries, configs, and commit messages) MUST be written in English, regardless of the user's prompt or interaction language.
 - **BDD Framework**: Cucumber Java 7 + TestNG
 - **UI Automation**: Selenium WebDriver 4 + Page Object Model + WebDriverManager
 - **API Automation**: REST Assured (`ApiClient`) + `ScenarioContext`
